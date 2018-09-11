@@ -40,7 +40,11 @@ entity pcie_altera is
     -- push TX data
     tx_wb_stb_i   : in  std_logic; -- may never exceed alloc_i
     tx_wb_dat_i   : in  std_logic_vector(63 downto 0);
-    tx_eop_i      : in  std_logic); -- Mark last strobe
+    tx_eop_i      : in  std_logic; -- Mark last strobe
+
+    -- The LTSSM state machine state
+    ltssmstate_o  : out std_logic_vector(4 downto 0):= (others => '0') -- ltssmstate
+  ); 
 end pcie_altera;
 
 architecture rtl of pcie_altera is
@@ -719,7 +723,7 @@ begin
         l2_exit            => l2_exit,
         hotrst_exit        => hotrst_exit,
         dlup_exit          => dlup_exit,
-        dl_ltssm           => open,
+        dl_ltssm           => ltssmstate_o,
         serdes_pll_locked  => pll_locked,
         reset_status       => open,
         ev128ns            => open,

@@ -32,6 +32,9 @@ package pcie_wb_pkg is
       pcie_rstn_i   : in  std_logic; -- Asynchronous "clear sticky" PCIe pin
       pcie_rx_i     : in  std_logic_vector(3 downto 0);
       pcie_tx_o     : out std_logic_vector(3 downto 0);
+		
+      -- The LTSSM state machine state
+      ltssmstate_o : out std_logic_vector(4 downto 0):= (others => '0'); -- ltssmstate
       
       -- Commands from PC to FPGA
       master_clk_i  : in  std_logic;
@@ -63,6 +66,9 @@ package pcie_wb_pkg is
       
       app_msi_req   : in  std_logic; -- Generate an MSI interrupt
       app_int_sts   : in  std_logic; -- Generate a legacy interrupt
+		
+      -- The LTSSM state machine state
+      ltssmstate_o : out std_logic_vector(4 downto 0):= (others => '0'); -- ltssmstate
       
       -- Simplified wishbone output stream
       wb_clk_o      : out std_logic;

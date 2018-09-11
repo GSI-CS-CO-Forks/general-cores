@@ -31,7 +31,11 @@ entity pcie_wb is
     slave_clk_i   : in  std_logic := '0';
     slave_rstn_i  : in  std_logic := '1';
     slave_i       : in  t_wishbone_slave_in := cc_dummy_slave_in;
-    slave_o       : out t_wishbone_slave_out);
+    slave_o       : out t_wishbone_slave_out;
+
+    -- The LTSSM state machine state
+    ltssmstate_o  : out std_logic_vector(4 downto 0):= (others => '0') -- ltssmstate
+  );
 end pcie_wb;
 
 architecture rtl of pcie_wb is
@@ -107,7 +111,8 @@ begin
       
       tx_wb_stb_i   => tx_wb64_stb,
       tx_wb_dat_i   => tx_wb64_dat,
-      tx_eop_i      => tx_eop);
+      tx_eop_i      => tx_eop,
+      ltssmstate_o  => ltssmstate_o);
   
   pcie_rx : pcie_64to32 port map(
     clk_i            => internal_wb_clk,
